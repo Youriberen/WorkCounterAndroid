@@ -14,15 +14,17 @@ class MainActivity : AppCompatActivity() {
     var totalHour       = 0.0
     var totalMoney      = 0.0
     var totalEarned     = 0.0
-    var hourlyWage      = 25
-    val format: NumberFormat = NumberFormat.getCurrencyInstance(Locale.getDefault())
+    private var hourlyWage      = 25
+    private val format: NumberFormat = NumberFormat.getCurrencyInstance(Locale.getDefault())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initLabels()
+        updateLabels()
         calculate()
         addButton()
+        resetTotal()
         resetCurrent()
     }
 
@@ -37,16 +39,13 @@ class MainActivity : AppCompatActivity() {
         addBtn.setOnClickListener {
             currentHour += 0.5
             currentMoney = currentHour * hourlyWage
-
-            currentHoursTV.text = currentHour.toString()
-            currentMoneyTV.text = format.format(currentMoney)
+            updateLabels()
         }
         minBtn.setOnClickListener {
             currentHour -= 0.5
             currentMoney = currentHour * hourlyWage
+            updateLabels()
 
-            currentHoursTV.text = currentHour.toString()
-            currentMoneyTV.text = format.format(currentMoney)
         }
 
     }
@@ -55,8 +54,7 @@ class MainActivity : AppCompatActivity() {
         addCurrentBtn.setOnClickListener {
             totalHour += currentHour
             totalMoney += currentMoney
-            totalHoursTV.text = totalHour.toString()
-            totalMoneyTV.text = format.format(totalMoney)
+            updateLabels()
             initLabels()
         }
     }
@@ -67,8 +65,25 @@ class MainActivity : AppCompatActivity() {
             totalHoursTV.text = "0"
             totalMoneyTV.text = "0"
             totalEarned += totalMoney
-
-            totalEarnedTV.text = format.format(totalEarned)
+            totalMoney = 0.0
+            updateLabels()
         }
+    }
+
+    private fun resetTotal() {
+        resetTotalBtn.setOnClickListener {
+            totalEarned = 0.0
+            updateLabels()
+        }
+    }
+
+    private fun updateLabels() {
+        currentHoursTV.text = currentHour.toString()
+        currentMoneyTV.text = format.format(currentMoney)
+
+        totalHoursTV.text = totalHour.toString()
+        totalMoneyTV.text = format.format(totalMoney)
+
+        totalEarnedTV.text = format.format(totalEarned)
     }
 }
