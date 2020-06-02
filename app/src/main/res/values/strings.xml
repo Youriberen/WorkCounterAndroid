@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Work Counter</string>
+    <color name="blue">#1b6ca8</color>
 </resources>
