@@ -1,5 +1,6 @@
 package com.youriberen.workcounter
 
+import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -9,83 +10,76 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
-    var currentHour     = 0.0
-    var currentMoney    = 0.0
-    var totalHour       = 0.0
-    var totalMoney      = 0.0
     var totalEarned     = 0.0
-    private var hourlyWage      = 25
+
     private val format: NumberFormat = NumberFormat.getCurrencyInstance(Locale.getDefault())
 
     private val calculator = Calculator()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
-        initLabels()
+
+        getAllValues()
         updateLabels()
-        calculate()
-        addButton()
-        resetTotal()
-        resetCurrent()
+        buttons()
     }
 
-    private fun initLabels() {
-        currentHoursTV.text = "0"
-        currentMoneyTV.text = "€ 0"
-
-        calculator.getAllValues()
+    fun getAllValues() {
+        val sharedPreferences = getSharedPreferences("Counter", Context.MODE_PRIVATE)
+        calculator.hourCounter  =   sharedPreferences.getFloat("hourCounter", 0.0F)
+        calculator.moneyCounter =   sharedPreferences.getFloat("moneyCounter", 0.0F)
+        calculator.hourlyWage   =   sharedPreferences.getFloat("hourlyWage", 25.0F)
+        calculator.totalMoney   =   sharedPreferences.getFloat("totalMoney", 0.0F)
     }
 
-    private fun calculate() {
+    fun saveAllValues() {
+        val sharedPreferences = getSharedPreferences("Counter", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putFloat("hourCounter", calculator.hourCounter).apply()
+        editor.putFloat("moneyCounter", calculator.moneyCounter).apply()
+        editor.putFloat("totalMoney", calculator.totalMoney).apply()
+        editor.putString("test", "Hallo").apply()
+    }
+
+    private fun buttons() {
         addBtn.setOnClickListener {
-            currentHour += 0.5
-            currentMoney = currentHour * hourlyWage
+            calculator.plusStepper()
             updateLabels()
         }
         minBtn.setOnClickListener {
-            currentHour -= 0.5
-            currentMoney = currentHour * hourlyWage
+            calculator.minStepper()
             updateLabels()
-
         }
 
-    }
-
-    private fun addButton() {
         addCurrentBtn.setOnClickListener {
-            totalHour += currentHour
-            totalMoney += currentMoney
+            calculator.addButton()
             updateLabels()
-            initLabels()
+            saveAllValues()
+            getAllValues()
         }
-    }
 
-    private fun resetCurrent() {
         resetCurrentBtn.setOnClickListener {
-            totalHour = 0.0
-            totalHoursTV.text = "0"
-            totalMoneyTV.text = "0"
-            totalEarned += totalMoney
-            totalMoney = 0.0
+            calculator.resetCounter()
             updateLabels()
+            saveAllValues()
         }
-    }
 
-    private fun resetTotal() {
         resetTotalBtn.setOnClickListener {
-            totalEarned = 0.0
+            calculator.resetTotal()
             updateLabels()
+            saveAllValues()
         }
     }
 
     private fun updateLabels() {
-        currentHoursTV.text = currentHour.toString()
-        currentMoneyTV.text = format.format(currentMoney)
+        currentHoursTV.text = calculator.currentHour.toString()
+        currentMoneyTV.text = format.format(calculator.currentMoney)
 
-        totalHoursTV.text = totalHour.toString()
-        totalMoneyTV.text = format.format(totalMoney)
+        totalHoursTV.text = calculator.hourCounter.toString()
+        totalMoneyTV.text = format.format(calculator.moneyCounter)
 
-        totalEarnedTV.text = format.format(totalEarned)
+        totalEarnedTV.text = format.format(calculator.totalMoney)
     }
 }
