@@ -1,7 +1,11 @@
 package com.youriberen.workcounter
 
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
+import android.view.KeyEvent
+import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.NumberFormat
@@ -10,15 +14,11 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
-    var totalEarned     = 0.0
-
     private val format: NumberFormat = NumberFormat.getCurrencyInstance(Locale.getDefault())
-
     private val calculator = Calculator()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_main)
 
         getAllValues()
@@ -40,7 +40,10 @@ class MainActivity : AppCompatActivity() {
         editor.putFloat("hourCounter", calculator.hourCounter).apply()
         editor.putFloat("moneyCounter", calculator.moneyCounter).apply()
         editor.putFloat("totalMoney", calculator.totalMoney).apply()
-        editor.putString("test", "Hallo").apply()
+
+        //Save wage
+        val wageString = editWage.text.toString()
+        editor.putFloat("hourlyWage", wageString.toFloat()).apply()
     }
 
     private fun buttons() {
@@ -61,9 +64,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         resetCurrentBtn.setOnClickListener {
-            calculator.resetCounter()
-            updateLabels()
-            saveAllValues()
+            resetAlert()
         }
 
         resetTotalBtn.setOnClickListener {
@@ -71,6 +72,15 @@ class MainActivity : AppCompatActivity() {
             updateLabels()
             saveAllValues()
         }
+
+        editWage.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+                calculator.hourlyWage = editWage.text.toString().toFloat()
+                saveAllValues()
+                return@OnKeyListener true
+            }
+            false
+        })
     }
 
     private fun updateLabels() {
@@ -81,5 +91,30 @@ class MainActivity : AppCompatActivity() {
         totalMoneyTV.text = format.format(calculator.moneyCounter)
 
         totalEarnedTV.text = format.format(calculator.totalMoney)
+
+        editWage.setText(calculator.hourlyWage.toString())
     }
+
+    private fun resetAlert() {
+            val dialogBuilder = AlertDialog.Builder(this)
+            // set message of alert dialog
+            dialogBuilder.setMessage("Are you sure you want to reset your hours and salary?")
+                // if the dialog is cancelable
+                .setCancelable(false)
+                // positive button text and action
+                .setPositiveButton("Proceed", DialogInterface.OnClickListener {
+                        dialog, id ->
+                    calculator.resetCounter()
+                    updateLabels()
+                    saveAllValues()
+                })
+                // negative button text and action
+                .setNegativeButton("Cancel", DialogInterface.OnClickListener {
+                        dialog, id -> dialog.cancel()
+                })
+
+            val alert = dialogBuilder.create()
+            alert.setTitle("Reset Counter")
+            alert.show()
+        }
 }

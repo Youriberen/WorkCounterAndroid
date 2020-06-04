@@ -91,6 +91,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:layout_marginTop="30dp"
+
             android:text="Worked Hours"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
@@ -99,8 +100,9 @@
             android:id="@+id/earnedText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
             android:layout_marginTop="30dp"
-            android:layout_marginEnd="0dp"
+            android:layout_marginEnd="20dp"
             android:text="Earned salary"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
@@ -163,5 +165,29 @@
             android:textColor="#FFFFFF"
             android:textSize="18sp" />
     </LinearLayout>
+
+    <EditText
+        android:id="@+id/editWage"
+        android:layout_width="64dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="32dp"
+        android:ems="10"
+        android:textColor="#FFFFFF"
+        android:gravity="center"
+        android:inputType="numberDecimal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/resetTotalBtn" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hourly wage"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/editWage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/resetTotalBtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
