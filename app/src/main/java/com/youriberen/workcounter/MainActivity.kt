@@ -17,6 +17,8 @@ class MainActivity : AppCompatActivity() {
     private var hourlyWage      = 25
     private val format: NumberFormat = NumberFormat.getCurrencyInstance(Locale.getDefault())
 
+    private val calculator = Calculator()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -31,8 +33,8 @@ class MainActivity : AppCompatActivity() {
     private fun initLabels() {
         currentHoursTV.text = "0"
         currentMoneyTV.text = "€ 0"
-        currentHour = 0.0
-        currentMoney = 0.0
+
+        calculator.getAllValues()
     }
 
     private fun calculate() {
