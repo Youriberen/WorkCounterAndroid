@@ -1,14 +1,15 @@
-package com.youriberen.workcounter
+package com.youriberen.workcounter.UI
 
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.room.Room
-import com.youriberen.workcounter.dao.CounterDao
+import com.youriberen.workcounter.Calculator
+import com.youriberen.workcounter.R
 import com.youriberen.workcounter.model.Counter
 import com.youriberen.workcounter.repository.CounterRepository
 import kotlinx.android.synthetic.main.activity_main.*
@@ -91,10 +92,10 @@ class MainActivity : AppCompatActivity() {
             resetAlert()
         }
 
-        resetTotalBtn.setOnClickListener {
-            calculator.resetTotal()
-            updateLabels()
-            saveAllValues()
+        historyBtn.setOnClickListener {
+            val intent = Intent(this, HistoryActivity::class.java)
+            // start your next activity
+            startActivity(intent)
         }
 
         editWage.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
@@ -113,8 +114,6 @@ class MainActivity : AppCompatActivity() {
 
         totalHoursTV.text = calculator.hourCounter.toString()
         totalMoneyTV.text = format.format(calculator.moneyCounter)
-
-        totalEarnedTV.text = format.format(calculator.totalMoney)
 
         editWage.setText(calculator.hourlyWage.toString())
     }
