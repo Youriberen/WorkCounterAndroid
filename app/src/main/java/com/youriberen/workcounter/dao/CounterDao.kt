@@ -9,7 +9,7 @@ interface CounterDao {
     suspend fun getAll(): List<Counter>
 
     @Insert
-    suspend fun insertAll(vararg counter: Counter)
+    suspend fun insert(counter: Counter)
 
     @Delete
     suspend fun delete(counter: Counter)

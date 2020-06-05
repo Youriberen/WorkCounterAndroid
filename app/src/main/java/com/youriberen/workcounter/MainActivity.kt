@@ -7,7 +7,15 @@ import android.view.KeyEvent
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.room.Room
+import com.youriberen.workcounter.dao.CounterDao
+import com.youriberen.workcounter.model.Counter
+import com.youriberen.workcounter.repository.CounterRepository
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.NumberFormat
 import java.util.*
 
@@ -16,11 +24,13 @@ class MainActivity : AppCompatActivity() {
 
     private val format: NumberFormat = NumberFormat.getCurrencyInstance(Locale.getDefault())
     private val calculator = Calculator()
+    private lateinit var counterRepository: CounterRepository
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        counterRepository = CounterRepository(this)
         getAllValues()
         updateLabels()
         buttons()
@@ -46,6 +56,19 @@ class MainActivity : AppCompatActivity() {
         editor.putFloat("hourlyWage", wageString.toFloat()).apply()
     }
 
+    fun saveDB() {
+        val date = Date()
+        val hour = Counter(date.toString(), calculator.currentHour, format.format(calculator.currentMoney))
+        println(hour)
+        CoroutineScope(Dispatchers.Main).launch {
+            withContext(Dispatchers.IO) {
+                if (counterRepository != null) {
+                    counterRepository.insert(hour)
+                }
+            }
+        }
+    }
+
     private fun buttons() {
         addBtn.setOnClickListener {
             calculator.plusStepper()
@@ -57,6 +80,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         addCurrentBtn.setOnClickListener {
+            saveDB()
             calculator.addButton()
             updateLabels()
             saveAllValues()

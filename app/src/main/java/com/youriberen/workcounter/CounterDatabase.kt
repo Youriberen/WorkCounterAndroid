@@ -7,33 +7,33 @@ import androidx.room.RoomDatabase
 import com.youriberen.workcounter.dao.CounterDao
 import com.youriberen.workcounter.model.Counter
 
-private const val DATABASE = "historyTable"
-
-@Database(
-    entities = [Counter::class],
-    version = 1,
-    exportSchema = false
-)
+@Database(entities = [Counter::class], version = 1, exportSchema = false)
 abstract class CounterDatabase : RoomDatabase() {
 
-    abstract fun counterData(): CounterDao
+    abstract fun counterDao(): CounterDao
 
     companion object {
+        private const val DATABASE_NAME = "COUNTER_DATABASE"
 
-        // For Singleton instantiation
         @Volatile
-        private var instance: CounterDatabase? = null
+        private var counterRoomDatabaseInstance: CounterDatabase? = null
 
-        fun getInstance(context: Context): CounterDatabase {
-            return instance ?: synchronized(this) {
-                instance
-                    ?: buildDatabase(context).also { instance = it }
+        fun getDatabase(context: Context): CounterDatabase? {
+            if (counterRoomDatabaseInstance == null) {
+                synchronized(CounterDatabase::class.java) {
+                    if (counterRoomDatabaseInstance == null) {
+                        counterRoomDatabaseInstance = Room.databaseBuilder(
+                            context.applicationContext,
+                            CounterDatabase::class.java,
+                            DATABASE_NAME
+                        )
+                            .allowMainThreadQueries()
+                            .build()
+                    }
+                }
             }
-        }
-
-        private fun buildDatabase(context: Context): CounterDatabase {
-            return Room.databaseBuilder(context, CounterDatabase::class.java, DATABASE)
-                .build()
+            return counterRoomDatabaseInstance
         }
     }
+
 }

@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Work Counter</string>
     <color name="blue">#1b6ca8</color>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
