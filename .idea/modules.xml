@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Work Counter.iml" filepath="$PROJECT_DIR$/Work Counter.iml" group="Work Counter" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Work_Counter.iml" filepath="$PROJECT_DIR$/.idea/modules/Work_Counter.iml" group="Work_Counter" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="Work Counter/app" />
     </modules>
   </component>
