@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/RemindersFragment">
+
+    <fragment
+        android:id="@+id/RemindersFragment"
+        android:name="com.youriberen.workcounter.UI.HistoryFragment"
+        android:label="Reminders Fragment"
+        tools:layout="@layout/fragment_history">
+
+    </fragment>
+
+</navigation>

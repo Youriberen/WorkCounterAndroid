@@ -6,7 +6,7 @@ import com.youriberen.workcounter.dao.CounterDao
 import com.youriberen.workcounter.model.Counter
 
 
-public class CounterRepository(context: Context) {
+public class HistoryRepository(context: Context) {
 
     private var counterDao: CounterDao
 
