@@ -12,4 +12,15 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="minus">-</string>
+    <string name="Plus">+</string>
+    <string name="Add">Add</string>
+    <string name="Reset">Reset</string>
+    <string name="EarnedSalary">Earned Salary</string>
+    <string name="WorkedHours">Worked Hours</string>
+    <string name="History">History</string>
+    <string name="HourlyWage">Hourly Wage</string>
+    <string name="Date">Date</string>
+    <string name="Hours">Hours</string>
+    <string name="Earned">Earned</string>
 </resources>

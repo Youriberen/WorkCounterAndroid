@@ -96,6 +96,7 @@ class MainActivity : AppCompatActivity() {
             resetAlert()
         }
 
+        //Use of intent
         historyBtn.setOnClickListener {
             val intent = Intent(this, HistoryActivity::class.java)
             // start your next activity

@@ -53,6 +53,13 @@ dependencies {
     // optional - Guava support for Room, including Optional and ListenableFuture
     implementation "androidx.room:room-guava:$room_version"
 
+    def lifecycle_version = "2.2.0"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+
+// LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+
+
     // Test helpers
     testImplementation "androidx.room:room-testing:$room_version"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
