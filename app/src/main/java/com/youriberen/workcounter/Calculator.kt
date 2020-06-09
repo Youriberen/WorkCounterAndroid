@@ -16,10 +16,7 @@ class Calculator() {
     var currentMoney    = 0.0F
     var currentHour     = 0.0F
 
-    //Bottom
-    var totalMoney      = 0.0F
-
-    var stepperValue    = 0.5F
+    private var stepperValue    = 0.5F
     var hourlyWage      = 25.0F
 
     private val format: NumberFormat = NumberFormat.getCurrencyInstance(Locale.getDefault())
@@ -46,13 +43,8 @@ class Calculator() {
 
     //Reset function for the counter, resets all counters, earned money wil added to total money
     fun resetCounter() {
-        totalMoney += moneyCounter
         hourCounter = 0.0F
         moneyCounter = 0.0F
-    }
-
-    fun resetTotal() {
-        totalMoney = 0.0F
     }
 
 }

@@ -44,8 +44,7 @@ class MainActivity : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences("Counter", Context.MODE_PRIVATE)
         calculator.hourCounter  =   sharedPreferences.getFloat("hourCounter", 0.0F)
         calculator.moneyCounter =   sharedPreferences.getFloat("moneyCounter", 0.0F)
-        calculator.hourlyWage   =   sharedPreferences.getFloat("hourlyWage", 25.0F)
-        calculator.totalMoney   =   sharedPreferences.getFloat("totalMoney", 0.0F)
+        calculator.hourlyWage   =   sharedPreferences.getFloat("hourlyWage", 0.0F)
     }
 
     private fun saveAllValues() {
@@ -53,7 +52,6 @@ class MainActivity : AppCompatActivity() {
         val editor = sharedPreferences.edit()
         editor.putFloat("hourCounter", calculator.hourCounter).apply()
         editor.putFloat("moneyCounter", calculator.moneyCounter).apply()
-        editor.putFloat("totalMoney", calculator.totalMoney).apply()
 
         //Save wage
         val wageString = editWage.text.toString()
@@ -99,7 +97,7 @@ class MainActivity : AppCompatActivity() {
         //Use of intent
         historyBtn.setOnClickListener {
             val intent = Intent(this, HistoryActivity::class.java)
-            // start your next activity
+            // start new activity
             startActivity(intent)
         }
 
