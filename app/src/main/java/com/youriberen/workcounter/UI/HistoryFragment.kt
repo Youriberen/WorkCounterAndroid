@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.youriberen.workcounter.MainActivityViewModel
 import com.youriberen.workcounter.R
 import com.youriberen.workcounter.model.Counter
 import com.youriberen.workcounter.repository.HistoryRepository
@@ -21,13 +23,11 @@ import kotlinx.coroutines.withContext
 
 class HistoryFragment : Fragment() {
 
-    private lateinit var historyRepository: HistoryRepository
-
-    //populate some test data in Reminders list
     private var history: ArrayList<Counter> = arrayListOf()
 
     private lateinit var historyAdapter: HistoryAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
+    private val viewModel: MainActivityViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,22 +41,18 @@ class HistoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        historyRepository = HistoryRepository(requireContext())
-        getRemindersFromDatabase()
-
+        observeViewModel()
         initRv()
     }
 
-    private fun getRemindersFromDatabase() {
-        CoroutineScope(Dispatchers.Main).launch {
-            val history = withContext(Dispatchers.IO) {
-                historyRepository.getAll()
-            }
+    private fun observeViewModel() {
+        viewModel.counters.observe(viewLifecycleOwner, Observer { counters ->
             this@HistoryFragment.history.clear()
-            this@HistoryFragment.history.addAll(history)
+            this@HistoryFragment.history.addAll(counters)
             historyAdapter.notifyDataSetChanged()
-        }
+        })
     }
+
 
     private fun initRv() {
 
@@ -92,13 +88,7 @@ class HistoryFragment : Fragment() {
                 val position = viewHolder.adapterPosition
 
                 val historyToDelete = history[position]
-
-                CoroutineScope(Dispatchers.Main).launch {
-                    withContext(Dispatchers.IO) {
-                        historyRepository.delete(historyToDelete)
-                    }
-                    getRemindersFromDatabase()
-                }
+                viewModel.delete(historyToDelete)
 
             }
         }

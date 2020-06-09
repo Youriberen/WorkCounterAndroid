@@ -23,4 +23,5 @@
     <string name="Date">Date</string>
     <string name="Hours">Hours</string>
     <string name="Earned">Earned</string>
+    <string name="zero">0</string>
 </resources>

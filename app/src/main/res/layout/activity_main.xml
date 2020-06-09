@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="76dp"
         android:layout_marginTop="16dp"
-        android:text="0"
+        android:text="@string/zero"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,7 +48,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="78dp"
-        android:text="0"
+        android:text="@string/zero"
+        android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -118,8 +119,8 @@
             android:layout_marginTop="50dp"
             android:layout_marginEnd="0dp"
             android:gravity="center_horizontal"
+            android:text="@string/zero"
             android:textAlignment="center"
-            android:text="10"
             android:textColor="#FFFFFF"
             android:textSize="18sp" />
 
@@ -130,8 +131,8 @@
             android:layout_marginStart="40dp"
             android:layout_marginTop="50dp"
             android:gravity="center_horizontal"
+            android:text="@string/zero"
             android:textAlignment="center"
-            android:text="100"
             android:textColor="#FFFFFF"
             android:textSize="18sp" />
     </LinearLayout>
@@ -147,7 +148,8 @@
         android:inputType="numberDecimal"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:autofillHints="" />
 
     <TextView
         android:id="@+id/textView"

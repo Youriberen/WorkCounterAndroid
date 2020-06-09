@@ -6,9 +6,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.youriberen.workcounter.Calculator
+import com.youriberen.workcounter.MainActivityViewModel
 import com.youriberen.workcounter.R
 import com.youriberen.workcounter.model.Counter
 import com.youriberen.workcounter.repository.HistoryRepository
@@ -28,13 +30,11 @@ class MainActivity : AppCompatActivity() {
 
     private val format: NumberFormat = NumberFormat.getCurrencyInstance(Locale.getDefault())
     private val calculator = Calculator()
-    private lateinit var historyRepository: HistoryRepository
-
+    private val viewModel: MainActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        historyRepository = HistoryRepository(this)
         getAllValues()
         updateLabels()
         buttons()
@@ -67,8 +67,8 @@ class MainActivity : AppCompatActivity() {
         println(hour)
         CoroutineScope(Dispatchers.Main).launch {
             withContext(Dispatchers.IO) {
-                if (historyRepository != null) {
-                    historyRepository.insert(hour)
+                if (viewModel != null) {
+                    viewModel.insert(hour)
                 }
             }
         }
@@ -105,7 +105,14 @@ class MainActivity : AppCompatActivity() {
 
         editWage.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
-                calculator.hourlyWage = editWage.text.toString().toFloat()
+                val wage = editWage.text.toString().toString()
+                if(wage.isEmpty()){
+                    editWage.error = "Please fill in a number"
+                    return@OnKeyListener false
+                } else {
+                    calculator.hourlyWage = editWage.text.toString().toFloat()
+                }
+
                 saveAllValues()
                 return@OnKeyListener true
             }
@@ -121,6 +128,8 @@ class MainActivity : AppCompatActivity() {
         totalMoneyTV.text = format.format(calculator.moneyCounter)
 
         editWage.setText(calculator.hourlyWage.toString())
+
+
     }
 
     private fun resetAlert() {
