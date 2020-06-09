@@ -27,5 +27,4 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             historyRepository.delete(counter)
         }
     }
-
 }

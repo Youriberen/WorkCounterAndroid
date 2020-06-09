@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         buttons()
     }
 
-    fun getAllValues() {
+    private fun getAllValues() {
         val sharedPreferences = getSharedPreferences("Counter", Context.MODE_PRIVATE)
         calculator.hourCounter  =   sharedPreferences.getFloat("hourCounter", 0.0F)
         calculator.moneyCounter =   sharedPreferences.getFloat("moneyCounter", 0.0F)
@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         calculator.totalMoney   =   sharedPreferences.getFloat("totalMoney", 0.0F)
     }
 
-    fun saveAllValues() {
+    private fun saveAllValues() {
         val sharedPreferences = getSharedPreferences("Counter", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         editor.putFloat("hourCounter", calculator.hourCounter).apply()
@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         editor.putFloat("hourlyWage", wageString.toFloat()).apply()
     }
 
-    fun saveDB() {
+    private fun saveDB() {
         val date = Date()
         val formatter = SimpleDateFormat("dd MMM HH:mm:ss")
         val hour = Counter(formatter.format(date), calculator.currentHour, format.format(calculator.currentMoney))
@@ -105,12 +105,12 @@ class MainActivity : AppCompatActivity() {
 
         editWage.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
-                val wage = editWage.text.toString().toString()
+                val wage = editWage.text.toString()
                 if(wage.isEmpty()){
                     editWage.error = "Please fill in a number"
                     return@OnKeyListener false
                 } else {
-                    calculator.hourlyWage = editWage.text.toString().toFloat()
+                    calculator.hourlyWage = wage.toFloat()
                 }
 
                 saveAllValues()
