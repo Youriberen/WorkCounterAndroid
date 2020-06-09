@@ -13,16 +13,13 @@ import com.youriberen.workcounter.Calculator
 import com.youriberen.workcounter.MainActivityViewModel
 import com.youriberen.workcounter.R
 import com.youriberen.workcounter.model.Counter
-import com.youriberen.workcounter.repository.HistoryRepository
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.text.DateFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 
@@ -103,6 +100,7 @@ class MainActivity : AppCompatActivity() {
 
         editWage.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+                //Check if string is empty
                 val wage = editWage.text.toString()
                 if(wage.isEmpty()){
                     editWage.error = "Please fill in a number"
@@ -118,6 +116,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    //Every time a button is pressed the labels are updated
     private fun updateLabels() {
         currentHoursTV.text = calculator.currentHour.toString()
         currentMoneyTV.text = format.format(calculator.currentMoney)
@@ -126,8 +125,6 @@ class MainActivity : AppCompatActivity() {
         totalMoneyTV.text = format.format(calculator.moneyCounter)
 
         editWage.setText(calculator.hourlyWage.toString())
-
-
     }
 
     private fun resetAlert() {

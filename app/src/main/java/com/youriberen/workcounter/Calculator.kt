@@ -1,7 +1,5 @@
 package com.youriberen.workcounter
 
-import android.content.Context
-import android.content.SharedPreferences
 import java.text.NumberFormat
 import java.util.*
 
@@ -21,8 +19,7 @@ class Calculator() {
 
     private val format: NumberFormat = NumberFormat.getCurrencyInstance(Locale.getDefault())
 
-
-    //Used for the - Button
+    //Used for the -/+ Buttons
     public fun minStepper() {
         currentHour -= stepperValue
         currentMoney = currentHour * hourlyWage
@@ -41,7 +38,7 @@ class Calculator() {
         currentHour = 0.0F
     }
 
-    //Reset function for the counter, resets all counters, earned money wil added to total money
+    //Reset function for the counter, resets all counters
     fun resetCounter() {
         hourCounter = 0.0F
         moneyCounter = 0.0F
