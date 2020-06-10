@@ -12,6 +12,7 @@ class HistoryAdapter(
     private val counters: ArrayList<Counter>
 ) : RecyclerView.Adapter<HistoryAdapter.ReminderViewHolder>()  {
 
+    //Labels are filled from the counter array
     inner class ReminderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(counter: Counter) {
             itemView.dateTV.text = counter.workedDate

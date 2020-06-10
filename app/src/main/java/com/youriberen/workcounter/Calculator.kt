@@ -31,6 +31,7 @@ class Calculator() {
     }
 
     //Add button, add the current hours/money to the hour/money counter
+    //If add button is pressed the current hours/money has to be zero
     fun addButton() {
         hourCounter += currentHour
         moneyCounter += currentMoney

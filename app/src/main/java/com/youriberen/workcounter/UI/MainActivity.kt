@@ -44,17 +44,21 @@ class MainActivity : AppCompatActivity() {
         calculator.hourlyWage   =   sharedPreferences.getFloat("hourlyWage", 0.0F)
     }
 
+    //Save to shared preferences
     private fun saveAllValues() {
+        //Key = "Counter", all values are store in "Counter"
         val sharedPreferences = getSharedPreferences("Counter", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
+        //Save value in a key called "HourCounter" in a key called 'Counter"
         editor.putFloat("hourCounter", calculator.hourCounter).apply()
         editor.putFloat("moneyCounter", calculator.moneyCounter).apply()
 
-        //Save wage
+        //Save wage, editText = string convert to float
         val wageString = editWage.text.toString()
         editor.putFloat("hourlyWage", wageString.toFloat()).apply()
     }
 
+    //Save to database
     private fun saveDB() {
         val date = Date()
         val formatter = SimpleDateFormat("dd MMM HH:mm:ss")
@@ -69,6 +73,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //All buttons
     private fun buttons() {
         addBtn.setOnClickListener {
             calculator.plusStepper()
@@ -88,7 +93,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         resetCurrentBtn.setOnClickListener {
-            resetAlert()
+            resetAlert()    //Reset alert is called
         }
 
         //Use of intent
@@ -98,6 +103,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        //When enter is pressed editWage is saved, isempty than error message
         editWage.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
                 //Check if string is empty

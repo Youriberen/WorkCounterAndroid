@@ -38,6 +38,7 @@ class HistoryFragment : Fragment() {
         observeViewModel()
         initRv()
 
+        //reset button: for loop deletes all
         resetBtn.setOnClickListener {
             for (index in history){
                 viewModel.delete(index)

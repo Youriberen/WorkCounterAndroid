@@ -18,7 +18,6 @@ public class HistoryRepository(context: Context) {
         counterDao = counterDatabase?.counterDao()
     }
 
-
     fun getAll(): LiveData<List<Counter>> {
         return counterDao?.getAll() ?:
                 MutableLiveData(emptyList())
