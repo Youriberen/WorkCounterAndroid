@@ -108,7 +108,7 @@ class MainActivity : AppCompatActivity() {
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
                 //Check if string is empty
                 val wage = editWage.text.toString()
-                if(wage.isEmpty()){
+                if(wage.isEmpty() || wage == "."){
                     editWage.error = "Please fill in a number"
                     return@OnKeyListener false
                 } else {
